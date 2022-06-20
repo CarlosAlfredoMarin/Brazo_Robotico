@@ -2,6 +2,9 @@
 
 Este tutorial describe los detalles de un objeto de modelo URDF y un ejemplo de la construcción de un brazo robótico de 3 articulaciones.
 
+![](https://github.com/CarlosAlfredoMarin/Brazo_Robotico/blob/main/robot1_description/urdf/Brazo.png?raw=true)
+>Brazo Robótico a construir
+
 **Enlaces:** un enlace contiene las propiedades físicas de un cuerpo del modelo. Puede ser una rueda o un eslabón en una cadena conjunta. Cada enlace puede contener muchos elementos visuales y de colisión. Intente reducir la cantidad de enlaces en sus modelos para mejorar el rendimiento y la estabilidad. Por ejemplo, un modelo de mesa podría constar de 5 eslabones (4 para las patas y 1 para la parte superior) conectados mediante articulaciones. Sin embargo, esto es demasiado complejo, especialmente porque las articulaciones nunca se moverán. En su lugar, cree la tabla con 1 enlace y 5 elementos de colisión.
 
 **Colisión:** un elemento de colisión encapsula una geometría que se utiliza para la comprobación de colisiones. Puede ser una forma simple (que se prefiere) o una malla triangular (que consume más recursos). Un enlace puede contener muchos elementos de colisión.
@@ -227,3 +230,49 @@ Esta página contiene una lista de los materiales disponibles para Gazebo. Esta 
 
 <pre><code>gedit 'rospack find gazebo'/gazebo/share/gazebo/Media/materials/scripts/Gazebo.material
 </code></pre>
+
+
+
+
+
+
+## Controlador Básico para el Brazo
+
+Para que una articulación pueda ejercer algún movimiento es necesario asignar un controlador a cada articulación, posteriormente, se publica en el tópico correspondiente a la articulación que deseamos mover. Para lograr ello, se requieren 2 archivos nuevos:
+
+<a href="https://github.com/CarlosAlfredoMarin/Brazo_Robotico/blob/main/robot1_description/config/robot1_gazebo_control_Position.yaml" target="_blank">robot1_gazebo_control_Position.yaml</a>
+
+<a href="https://github.com/CarlosAlfredoMarin/Brazo_Robotico/blob/main/robot1_description/src/Mover_Articulacion.py" target="_blank">Mover_Articulacion.py</a>
+
+Revisaremos el archivo <a href="https://github.com/CarlosAlfredoMarin/Brazo_Robotico/blob/main/robot1_description/config/robot1_gazebo_control_Position.yaml" target="_blank">robot1_gazebo_control_Position.yaml</a>:
+
+```yml
+joint1_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: base_to_arm_base
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+```
+
+En esta sección de código, se tiene 1 controlador para 1 articulación. El nombre del controlador es ```joint1_position_controller```; el parámetro ```type``` indica el tipo de controlador, este controlador es de tipo ```effort``` o ```esfuerzo```; el parámetro ```joint``` indica a qué juntura o articulación estará ligado el controlador, la articulación a la que está asignado este controlador es ```base_to_arm_base```. El parámetro ```pid``` permite asignar ganancias al controlador.
+
+De la misma forma se realiza para todas las ```junturas``` o ```joints``` del brazo robótico.
+
+Ahora, revisaremos el archivo <a href="https://github.com/CarlosAlfredoMarin/Brazo_Robotico/blob/main/robot1_description/src/Mover_Articulacion.py" target="_blank">Mover_Articulacion.py</a>:
+
+```cpp
+pub = rospy.Publisher('/robot1/joint3_position_controller/
+command', Float64, queue_size=10)
+rospy.init_node('talker', anonymous=True)
+rate = rospy.Rate(10)
+position = 3.141592
+pub.publish(position)
+```
+
+En este archivo se crea un publicador llamado ```pub```, el cual publica en el tópico ```/robot1/joint3_position_controller/command``` un mensaje de tipo ```Float64```. La variable ```position``` almacena la posición deseada, la cual debe estar en ```radianes```, finalmente, con la línea de código ```pub.publish(position)``` se publica la posición deseada y la articulación correspondiente se mueve hasta el ángulo deseado.
+
+La Figura muestra la posición alcanzada por el segundo eslabón del robot cuando la entrada de posición es $\pi/2$, donde el origen angular es sobre el eje vertical, es decir en $+90^\circ$.
+
+![](https://github.com/CarlosAlfredoMarin/Brazo_Robotico/blob/main/robot1_description/urdf/Brazo_Posicion.png?raw=true)
+>Posición alcanzada por el brazo.
+
+Dado que las demás articulaciones ya tienen configurado un ```controlador de esfuerzo``` el robot mantiene su postura firme, antes de la implementación de los controladores, el robot se caía al suelo, porque no tenía firmeza, la cual se la otorgan los ```controladores de esfuerzo```.
