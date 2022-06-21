@@ -109,9 +109,9 @@ En la carpeta *urdf* es donde alojaremos los archivos de descripción del robot.
 Esta forma de describir el robot es ineficiente, ya que se repiten las estructuras de código varias veces, por ejemplo, para el código para crear la rueda 1 es casi el mismo que para las ruedas 2, 3 y 4. Por este motivo, resulta conveniente describir el robot de una forma más eficiente reutilizando bloques de código, esto se logra por medio de la etiqueta **xacro**, la cual funciona se manera semejante una función que recibe parámetros como entradas.
 
 ```xml
-	<xacro:macro name=" params="">
-        ...
-	</xacro:macro>
+<xacro:macro name=" params="">
+	...
+</xacro:macro>
 ```
 
 El archivo <a href="https://github.com/CarlosAlfredoMarin/Brazo_Robotico/blob/main/robot1_description/urdf/robot1_reduced.xacro" target="_blank">robot1_reduced.xacro</a> contiene el nuevo código reducido, el cual contiene:
