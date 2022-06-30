@@ -270,7 +270,7 @@ pub.publish(position)
 
 En este archivo se crea un publicador llamado ```pub```, el cual publica en el tópico ```/robot1/joint3_position_controller/command``` un mensaje de tipo ```Float64```. La variable ```position``` almacena la posición deseada, la cual debe estar en ```radianes```, finalmente, con la línea de código ```pub.publish(position)``` se publica la posición deseada y la articulación correspondiente se mueve hasta el ángulo deseado.
 
-La Figura muestra la posición alcanzada por el segundo eslabón del robot cuando la entrada de posición es $$\pi/2$$, donde el origen angular es sobre el eje vertical, es decir en $$+90^\circ$$.
+La Figura muestra la posición alcanzada por el segundo eslabón del robot cuando la entrada de posición es $\pi/2$, donde el origen angular es sobre el eje vertical, es decir en $$+90^\circ$$.
 
 ![](https://github.com/CarlosAlfredoMarin/Brazo_Robotico/blob/main/robot1_description/urdf/Brazo_Posicion.png?raw=true)
 >Posición alcanzada por el brazo.
