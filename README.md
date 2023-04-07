@@ -227,6 +227,15 @@ Esta página contiene una lista de los materiales disponibles para Gazebo. Esta 
 
 ## Controlador Básico para el Brazo
 
+Es necesario instalar desde la terminal de comandos todos los tipos de controla-
+dores:
+```
+sudo apt-get install ros-noetic-position-controllers
+sudo apt-get install ros-noetic-joint-state-controller
+sudo apt-get install ros-noetic-effort-controllers
+sudo apt-get install ros-noetic-velocity-controllers
+```
+
 Para que una articulación pueda ejercer algún movimiento es necesario asignar un controlador a cada articulación, posteriormente, se publica en el tópico correspondiente a la articulación que deseamos mover. Para lograr ello, se requieren 2 archivos nuevos:
 
 <a href="https://github.com/CarlosAlfredoMarin/Brazo_Robotico/blob/main/robot1_description/config/robot1_gazebo_control_Position.yaml" target="_blank">robot1_gazebo_control_Position.yaml</a>
