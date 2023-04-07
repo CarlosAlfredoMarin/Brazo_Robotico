@@ -173,22 +173,11 @@ Ejecutamos el archivo lanzador con el siguiente comando:
 <pre><code>roslaunch robot1_description display.launch
 </code></pre>
 
-Para agregar un **mesh** existen varias formas de hacerlo:
-
-Descargamos en la carpeta */Brazo_Robot/src* el mesh desde github o lo descargamos y lo movemos a la carpeta antes mencionada. </li>
-        
-<pre><code>git clone https://github.com/pr2/pr2_common.git
-</code></pre>
-
-Instalar los mesh directamente sobre ROS:
-<pre><code>sudo apt-get install ros-noetic-pr2-common
-</code></pre>
-
-En nuestro caso se instaló la librería **pr2\_common** que contiene los meshes de un un efector final basado en 2 pinzas. Ahora que ya tenemos los meshes disponibles para su uso, solo queda agregar la línea de código para llamar al mesh, esto se hace dentro de la etiqueta ```<geometry>```
+Para agregar un **mesh**, se descargan los archivos ```l_finger.daey``` y ```l_finger_tip.dae``` a la carpeta ```meshes```, que contiene los meshes de un un efector final basado en 2 pinzas. Ahora que ya tenemos los meshes disponibles para su uso, solo queda agregar la línea de código para llamar al mesh, esto se hace dentro de la etiqueta ```<geometry>```
 
 ```xml
 <geometry>
-    <mesh filename="package://pr2_description/meshes/gripper_v0/l_finger.dae"/>
+    <mesh filename="package://robot1_description/meshes/l_finger.dae"/>
 </geometry>
 ```
 
