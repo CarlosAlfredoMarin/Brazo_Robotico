@@ -274,3 +274,8 @@ La Figura muestra la posición alcanzada por el segundo eslabón del robot cuand
 >Posición alcanzada por el brazo.
 
 Dado que las demás articulaciones ya tienen configurado un ```controlador de esfuerzo``` el robot mantiene su postura firme, antes de la implementación de los controladores, el robot se caía al suelo, porque no tenía firmeza, la cual se la otorgan los ```controladores de esfuerzo```.
+
+Para ejecutar la simulaciòn, abra una nueva terminal y ejecute el siguiente comando:
+```
+roslaunch robot1_description display.launch
+```
